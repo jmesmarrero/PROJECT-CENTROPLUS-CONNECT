@@ -1,7 +1,6 @@
 package es.ies.puerto.models;
 
-public enum UsuarioTipoActividad {
+public enum TipoActividad {
     ACADEMICA,
     DEPORTIVA
-
 }
