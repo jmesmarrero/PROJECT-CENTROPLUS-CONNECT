@@ -1,22 +1,44 @@
-package es.ies.puerto.repositories.impl;
+package es.ies.puerto.repositories.sqlite;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
 import es.ies.puerto.models.Reserva;
 import es.ies.puerto.repositories.ReservaRepository;
-import es.ies.puerto.repositories.sqlite.SQLiteConnectionManager;
 
-public class ReservaRepositoryImpl extends SQLiteConnectionManager implements ReservaRepository {
+public class ReservaSqliteRepository extends SQLiteConnectionManager implements ReservaRepository {
 
-    public ReservaRepositoryImpl(String databaseUrl) {
+    public ReservaSqliteRepository(String databaseUrl) {
         super(databaseUrl);
     }
 
     @Override
     public Reserva create(Reserva reserva) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement(
+                        "INSERT INTO reservas (id_usuario, id_actividad, fecha, estado) VALUES (?, ?, ?, ?)",
+                        Statement.RETURN_GENERATED_KEYS)) {
+
+            sentencia.setLong(1, reserva.getIdUsuario());
+            sentencia.setLong(2, reserva.getIdActividad());
+            sentencia.setString(3, reserva.getFecha());
+            sentencia.setString(4, reserva.getEstado().name());
+
+            sentencia.executeUpdate();
+
+            try (ResultSet generatedKeys = sentencia.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    reserva.setId(generatedKeys.getLong(1));
+                }
+            }
+
+            return reserva;
+        }
     }
 
     @Override
