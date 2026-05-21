@@ -9,7 +9,7 @@ public class Usuario {
     private String dni;
     private String email;
     private String telefono;
-    private UsuarioTipoActividad tipoUsuario;
+    private TipoUsuario tipoUsuario;
 
     public Usuario() {
     }
@@ -18,7 +18,7 @@ public class Usuario {
         this.id = id;
     }
 
-    public Usuario(Long id, String nombre, String dni, String email, String telefono, UsuarioTipoActividad tipoUsuario) {
+    public Usuario(Long id, String nombre, String dni, String email, String telefono, TipoUsuario tipoUsuario) {
         this.id = id;
         this.nombre = nombre;
         this.dni = dni;
@@ -67,11 +67,11 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public UsuarioTipoActividad getTipoUsuario() {
+    public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(UsuarioTipoActividad tipoUsuario) {
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
