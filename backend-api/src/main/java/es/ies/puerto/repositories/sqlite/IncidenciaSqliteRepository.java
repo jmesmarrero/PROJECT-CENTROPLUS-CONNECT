@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,41 +46,160 @@ public class IncidenciaSqliteRepository extends SQLiteConnectionManager implemen
 
     @Override
     public Optional<Incidencia> findById(Long id) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement(
+                        "SELECT id, id_usuario, asunto, descripcion, fecha, estado FROM incidencias WHERE id = ?")) {
+
+            sentencia.setLong(1, id);
+
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                if (resultado.next()) {
+                    return Optional.of(mapRow(resultado));
+                }
+                return Optional.empty();
+            }
+        }
     }
 
     @Override
     public List<Incidencia> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<Incidencia> incidencias = new ArrayList<>();
+
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement(
+                        "SELECT id, id_usuario, asunto, descripcion, fecha, estado FROM incidencias");
+                ResultSet resultado = sentencia.executeQuery()) {
+
+            while (resultado.next()) {
+                incidencias.add(mapRow(resultado));
+            }
+        }
+
+        return incidencias;
     }
 
     @Override
     public boolean update(Incidencia incidencia) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement(
+                        "UPDATE incidencias SET id_usuario = ?, asunto = ?, descripcion = ?, fecha = ?, estado = ? WHERE id = ?")) {
+
+            sentencia.setLong(1, incidencia.getIdUsuario());
+            sentencia.setString(2, incidencia.getAsunto());
+            sentencia.setString(3, incidencia.getDescripcion());
+            sentencia.setString(4, incidencia.getFecha());
+            sentencia.setString(5, incidencia.getEstado().name());
+            sentencia.setLong(6, incidencia.getId());
+
+            return sentencia.executeUpdate() > 0;
+        }
     }
 
     @Override
     public boolean deleteById(Long id) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection.prepareStatement("DELETE FROM incidencias WHERE id = ?")) {
+
+            sentencia.setLong(1, id);
+
+            return sentencia.executeUpdate() > 0;
+        }
     }
 
     @Override
     public List<Incidencia> findByUsuario(Long idUsuario) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<Incidencia> incidenciasByUsuario = new ArrayList<>();
+
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection
+                        .prepareStatement(
+                                "SELECT id, id_usuario, asunto, descripcion, fecha, estado FROM incidencias WHERE id_usuario = ?")) {
+
+            sentencia.setLong(1, idUsuario);
+
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                while (resultado.next()) {
+                    incidenciasByUsuario.add(mapRow(resultado));
+                }
+            }
+        }
+
+        return incidenciasByUsuario;
     }
 
     @Override
     public List<Incidencia> findByEstado(EstadoIncidencia estado) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<Incidencia> incidenciasByEstado = new ArrayList<>();
+
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection
+                        .prepareStatement(
+                                "SELECT id, id_usuario, asunto, descripcion, fecha, estado FROM incidencias WHERE estado = ?")) {
+
+            sentencia.setString(1, estado.name());
+
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                while (resultado.next()) {
+                    incidenciasByEstado.add(mapRow(resultado));
+                }
+            }
+        }
+
+        return incidenciasByEstado;
     }
 
     @Override
     public List<Incidencia> findByUsuarioDni(String dni) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<Incidencia> incidenciasByUsuarioDni = new ArrayList<>();
+
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection
+                        .prepareStatement(
+                                "SELECT i.id, i.id_usuario, i.asunto, i.descripcion, i.fecha, i.estado FROM incidencias i INNER JOIN usuarios u ON i.id_usuario = u.id WHERE u.dni = ?")) {
+
+            sentencia.setString(1, dni);
+
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                while (resultado.next()) {
+                    incidenciasByUsuarioDni.add(mapRow(resultado));
+                }
+            }
+        }
+
+        return incidenciasByUsuarioDni;
     }
 
     @Override
     public List<Incidencia> findByUsuarioEmail(String email) throws SQLException {
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<Incidencia> incidenciasByUsuarioEmail = new ArrayList<>();
+
+        try (Connection connection = this.getConnection();
+                PreparedStatement sentencia = connection
+                        .prepareStatement(
+                                "SELECT i.id, i.id_usuario, i.asunto, i.descripcion, i.fecha, i.estado FROM incidencias i INNER JOIN usuarios u ON i.id_usuario = u.id WHERE u.email = ?")) {
+
+            sentencia.setString(1, email);
+
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                while (resultado.next()) {
+                    incidenciasByUsuarioEmail.add(mapRow(resultado));
+                }
+            }
+        }
+
+        return incidenciasByUsuarioEmail;
+    }
+
+    private Incidencia mapRow(ResultSet resultado) throws SQLException {
+
+        Incidencia incidencia = new Incidencia();
+        incidencia.setId(resultado.getLong("id"));
+        incidencia.setIdUsuario(resultado.getLong("id_usuario"));
+        incidencia.setAsunto(resultado.getString("asunto"));
+        incidencia.setDescripcion(resultado.getString("descripcion"));
+        incidencia.setFecha(resultado.getString("fecha"));
+        incidencia.setEstado(EstadoIncidencia.valueOf(resultado.getString("estado")));
+        return incidencia;
     }
 }
