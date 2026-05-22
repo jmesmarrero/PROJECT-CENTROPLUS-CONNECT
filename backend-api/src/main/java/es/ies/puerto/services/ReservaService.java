@@ -2,7 +2,6 @@ package es.ies.puerto.services;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.Reserva;
 
@@ -10,7 +9,7 @@ public interface ReservaService {
 
     Reserva crear(Reserva reserva) throws SQLException;
 
-    Optional<Reserva> buscarPorId(Long id) throws SQLException;
+    Reserva buscarPorId(Long id) throws SQLException;
 
     List<Reserva> buscarTodos() throws SQLException;
 

@@ -2,7 +2,6 @@ package es.ies.puerto.services.impl;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.Reserva;
 import es.ies.puerto.repositories.ReservaRepository;
@@ -30,7 +29,7 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public Optional<Reserva> buscarPorId(Long id) throws SQLException {
+    public Reserva buscarPorId(Long id) throws SQLException {
         if (!ReservaValidator.esIdValido(id)) {
             throw new IllegalArgumentException("El id es invalido");
         }

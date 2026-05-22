@@ -2,7 +2,6 @@ package es.ies.puerto.repositories;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.EstadoIncidencia;
 import es.ies.puerto.models.Incidencia;
@@ -25,10 +24,10 @@ public interface IncidenciaRepository {
      * Busca una incidencia por su identificador.
      *
      * @param id identificador de la incidencia
-     * @return incidencia encontrada, o vacio si no existe
+     * @return incidencia encontrada, o null si no existe
      * @throws SQLException si ocurre un error al consultar la base de datos
      */
-    Optional<Incidencia> findById(Long id) throws SQLException;
+    Incidencia findById(Long id) throws SQLException;
 
     /**
      * Obtiene todas las incidencias almacenadas.

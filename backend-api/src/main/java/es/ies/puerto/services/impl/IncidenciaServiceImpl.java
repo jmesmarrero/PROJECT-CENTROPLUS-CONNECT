@@ -2,7 +2,6 @@ package es.ies.puerto.services.impl;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.EstadoIncidencia;
 import es.ies.puerto.models.Incidencia;
@@ -32,7 +31,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public Optional<Incidencia> buscarPorId(Long id) throws SQLException {
+    public Incidencia buscarPorId(Long id) throws SQLException {
         if (!IncidenciaValidator.esIdValido(id)) {
             throw new IllegalArgumentException("El id es invalido");
         }

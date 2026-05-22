@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.EstadoReserva;
 import es.ies.puerto.models.Reserva;
@@ -44,7 +43,7 @@ public class ReservaSqliteRepository extends SQLiteConnectionManager implements 
     }
 
     @Override
-    public Optional<Reserva> findById(Long id) throws SQLException {
+    public Reserva findById(Long id) throws SQLException {
         try (Connection connection = this.getConnection();
                 PreparedStatement sentencia = connection.prepareStatement(
                         "SELECT id, id_usuario, id_actividad, fecha, estado FROM reservas WHERE id = ?")) {
@@ -53,9 +52,9 @@ public class ReservaSqliteRepository extends SQLiteConnectionManager implements 
 
             try (ResultSet resultado = sentencia.executeQuery()) {
                 if (resultado.next()) {
-                    return Optional.of(mapRow(resultado));
+                    return mapRow(resultado);
                 }
-                return Optional.empty();
+                return null;
             }
         }
     }

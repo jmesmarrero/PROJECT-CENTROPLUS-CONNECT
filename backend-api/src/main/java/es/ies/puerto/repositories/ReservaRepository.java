@@ -2,7 +2,6 @@ package es.ies.puerto.repositories;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.Reserva;
 
@@ -24,10 +23,10 @@ public interface ReservaRepository {
      * Busca una reserva por su identificador.
      *
      * @param id identificador de la reserva
-     * @return reserva encontrada, o vacio si no existe
+     * @return reserva encontrada, o null si no existe
      * @throws SQLException si ocurre un error al consultar la base de datos
      */
-    Optional<Reserva> findById(Long id) throws SQLException;
+    Reserva findById(Long id) throws SQLException;
 
     /**
      * Obtiene todas las reservas almacenadas.
