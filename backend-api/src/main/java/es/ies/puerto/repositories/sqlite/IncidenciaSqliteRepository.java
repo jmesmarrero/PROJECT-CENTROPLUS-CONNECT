@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import es.ies.puerto.models.EstadoIncidencia;
 import es.ies.puerto.models.Incidencia;
@@ -45,7 +44,7 @@ public class IncidenciaSqliteRepository extends SQLiteConnectionManager implemen
     }
 
     @Override
-    public Optional<Incidencia> findById(Long id) throws SQLException {
+    public Incidencia findById(Long id) throws SQLException {
 
         try (Connection connection = this.getConnection();
                 PreparedStatement sentencia = connection.prepareStatement(
@@ -55,9 +54,9 @@ public class IncidenciaSqliteRepository extends SQLiteConnectionManager implemen
 
             try (ResultSet resultado = sentencia.executeQuery()) {
                 if (resultado.next()) {
-                    return Optional.of(mapRow(resultado));
+                    return mapRow(resultado);
                 }
-                return Optional.empty();
+                return null;
             }
         }
     }
