@@ -6,9 +6,9 @@ import es.ies.puerto.models.Usuario;
 
 public class UsuarioValidator {
 
-    public static boolean idValido(Long id){
-        
-        return  id != null;
+    public static boolean idValido(Long id) {
+
+        return id != null;
     }
 
     public static boolean nombreValido(String nombre) {
@@ -49,7 +49,7 @@ public class UsuarioValidator {
         if (usuario == null) {
             return false;
         }
-        return nombreValido(usuario.getNombre()) &&
+        return idValido(usuario.getId()) && nombreValido(usuario.getNombre()) &&
                 emailValido(usuario.getEmail()) &&
                 dniValido(usuario.getDni()) &&
                 esTipoUsuario(usuario.getTipoUsuario());
