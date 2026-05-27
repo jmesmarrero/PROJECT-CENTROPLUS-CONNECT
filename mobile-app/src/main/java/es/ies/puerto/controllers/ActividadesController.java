@@ -1,5 +1,11 @@
 package es.ies.puerto.controllers;
 
+import java.util.List;
+
+import es.ies.puerto.models.Actividad;
+import es.ies.puerto.repositories.sqlite.ActividadRepository;
+import es.ies.puerto.services.IActividadService;
+import es.ies.puerto.services.impl.ActividadServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,13 +18,15 @@ public class ActividadesController {
 
     @FXML
     public void initialize() {
-        ObservableList<String> actividades = FXCollections.observableArrayList(
-            "Yoga - DEPORTIVA - 25.50€",
-            "Programación Java - ACADEMICA - 40.00€",
-            "Spinning - DEPORTIVA - 18.00€",
-            "Inglés técnico - ACADEMICA - 30.00€",
-            "Sistemas Linux - ACADEMICA - 45.00€"
-        );
-        listActividades.setItems(actividades);
+        String url = "jdbc:sqlite:../database/centroplus.db";
+        ActividadRepository repo = new ActividadRepository(url);
+        IActividadService service = new ActividadServiceImpl(repo);
+
+        List<Actividad> actividades = service.findAll();
+        ObservableList<String> items = FXCollections.observableArrayList();
+        for (Actividad a : actividades) {
+            items.add(a.getNombre() + " - " + a.getTipoActividad() + " - " + a.getPrecio() + "€");
+        }
+        listActividades.setItems(items);
     }
 }
