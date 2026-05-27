@@ -1,6 +1,6 @@
 package es.ies.puerto.validators;
 
-import es.ies.puerto.models.TipoActividad;
+
 import es.ies.puerto.models.TipoUsuario;
 import es.ies.puerto.models.Usuario;
 
