@@ -12,14 +12,34 @@ public class Actividad {
     private Integer plazasMaximas;
     private Integer plazasOcupadas;
 
+    /**
+     * Constructor vacio
+     */
     public Actividad() {
     }
 
+    /**
+     * Constructor con el identificador unico
+     * 
+     * @param id identificador unico de la clase
+     */
     public Actividad(Long id) {
         this.id = id;
     }
 
-    public Actividad(Long id, String nombre, TipoActividad tipoActividad, Integer duracion, Double precio, Integer plazasMaximas,
+    /**
+     * Constructor de la clase
+     * 
+     * @param id             Identificasdor de actividad
+     * @param nombre         nombre de actividad
+     * @param tipoActividad  tipo de actividad
+     * @param duracion       minutos de la actividad
+     * @param precio         Precio de la actividad
+     * @param plazasMaximas  plazas de la actividad
+     * @param plazasOcupadas plazas ocuapdas de la actividad
+     */
+    public Actividad(Long id, String nombre, TipoActividad tipoActividad, Integer duracion, Double precio,
+            Integer plazasMaximas,
             Integer plazasOcupadas) {
         this.id = id;
         this.nombre = nombre;
@@ -29,8 +49,6 @@ public class Actividad {
         this.plazasMaximas = plazasMaximas;
         this.plazasOcupadas = plazasOcupadas;
     }
-
- 
 
     public Long getId() {
         return id;
@@ -88,14 +106,20 @@ public class Actividad {
         this.plazasOcupadas = plazasOcupadas;
     }
 
+    public Integer plazasDisponibles() {
+        return plazasMaximas - plazasOcupadas;
+    }
+
+    public void cancelarPlaza(){
+        
+    }
+
     @Override
     public String toString() {
         return "Actividad [id=" + id + ", nombre=" + nombre + ", tipoActividad=" + tipoActividad + ", duracion="
                 + duracion + ", precio=" + precio + ", plazasMaximas=" + plazasMaximas + ", plazasOcupadas="
                 + plazasOcupadas + "]";
     }
-
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -107,9 +131,9 @@ public class Actividad {
             return false;
         }
         Actividad actividad = (Actividad) obj;
-        
+
         return Objects.equals(id, actividad.id);
-        
+
     }
 
     @Override

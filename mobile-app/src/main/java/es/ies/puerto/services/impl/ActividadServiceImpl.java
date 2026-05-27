@@ -3,15 +3,16 @@ package es.ies.puerto.services.impl;
 import java.util.List;
 
 import es.ies.puerto.models.Actividad;
+import es.ies.puerto.repositories.IActividadRepository;
 import es.ies.puerto.repositories.sqlite.ActividadRepository;
 import es.ies.puerto.services.IActividadService;
 import es.ies.puerto.validators.ActividadValidator;
 
 public class ActividadServiceImpl implements IActividadService {
 
-    private final ActividadRepository repo;
+    private final IActividadRepository repo;
 
-    public ActividadServiceImpl(ActividadRepository repo) {
+    public ActividadServiceImpl(IActividadRepository repo) {
         this.repo = repo;
     }
 
