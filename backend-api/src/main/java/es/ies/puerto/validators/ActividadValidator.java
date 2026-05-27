@@ -2,7 +2,7 @@ package es.ies.puerto.validators;
 
 import es.ies.puerto.models.Actividad;
 import es.ies.puerto.models.TipoActividad;
-import es.ies.puerto.models.Usuario;
+
 
 public class ActividadValidator {
 
