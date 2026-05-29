@@ -2,16 +2,19 @@ package es.ies.puerto.services.impl;
 
 import java.util.List;
 
+import javax.xml.validation.Validator;
+
 import es.ies.puerto.models.Actividad;
-import es.ies.puerto.repositories.sqlite.ActividadRepository;
+import es.ies.puerto.repositories.IActividadRepository;
+
 import es.ies.puerto.services.IActividadService;
 import es.ies.puerto.validators.ActividadValidator;
 
 public class ActividadServiceImpl implements IActividadService {
 
-    private final ActividadRepository repo;
+    private final IActividadRepository repo;
 
-    public ActividadServiceImpl(ActividadRepository repo) {
+    public ActividadServiceImpl(IActividadRepository repo) {
         this.repo = repo;
     }
 
@@ -59,5 +62,42 @@ public class ActividadServiceImpl implements IActividadService {
         }
         return repo.findByNombre(nombre);
     }
+
+    @Override
+    public boolean reservarPlaza(Long id) {
+        if(!ActividadValidator.idValido(id)){
+            return false;
+        }
+
+        Actividad actividadBuscar = repo.findById(id);
+        if (actividadBuscar == null) {
+            return false;
+        }
+        if (actividadBuscar.getPlazasOcupadas() >= actividadBuscar.getPlazasMaximas()) {
+            return false;
+        }
+         actividadBuscar.reservarPlaza();
+        return repo.update(actividadBuscar);
+    }
+
+    @Override
+    public boolean cancelarPlaza(Long id) {
+        if (!ActividadValidator.idValido(id)) {
+            return false;
+        }
+        Actividad actividadCancelar = repo.findById(id);
+
+        if (actividadCancelar == null) {
+            return false;
+        }
+        if (actividadCancelar.getPlazasOcupadas() <= 0) {
+            return false;
+        }
+        actividadCancelar.cancelarPlaza();
+        return repo.update(actividadCancelar);
+
+    }
+
+    
 
 }

@@ -47,4 +47,7 @@ public interface IActividadService {
      * @return actividad con ese nombre
      */
     Actividad findByNombre(String nombre);
+
+    boolean reservarPlaza(Long id);
+    boolean cancelarPlaza(Long id);
 }

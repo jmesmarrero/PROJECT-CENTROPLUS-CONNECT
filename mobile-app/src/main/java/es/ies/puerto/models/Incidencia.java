@@ -11,13 +11,29 @@ public class Incidencia {
     private String fecha;
     private EstadoIncidencia estado;
 
+    /**
+     * Constructor vacio por defecto
+     */
     public Incidencia() {
     }
-
+    
+    /**
+     * Constructor con parametro unico
+     * @param id identificador unico de la clase
+     */
     public Incidencia(Long id) {
         this.id = id;
     }
 
+    /**
+     * Constructor con todos los parametros de la clase
+     * @param id
+     * @param idUsuario
+     * @param asunto
+     * @param descripcion
+     * @param fecha
+     * @param estado
+     */
     public Incidencia(Long id, Long idUsuario, String asunto, String descripcion, String fecha,
             EstadoIncidencia estado) {
         this.id = id;
