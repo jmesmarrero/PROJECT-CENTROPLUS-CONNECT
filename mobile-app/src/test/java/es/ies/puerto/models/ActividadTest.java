@@ -11,7 +11,7 @@ class ActividadTest {
     Actividad actividad;
     Long id = 1L;
     String nombre = "Nombre";
-    TipoActividad tipo = TipoActividad.valueOf("Tipo");
+    TipoActividad tipo = TipoActividad.valueOf("DEPORTIVA");
     Integer duracion = 1;
     Double precio = 2.0;
     Integer plazas = 5;
@@ -34,7 +34,7 @@ class ActividadTest {
     @Order(2)
     @Test
     void actividadEqualsTrueTest() {
-        Actividad actividadNueva = new Actividad(id);
+        Actividad actividadNueva = new Actividad(1L);
         Assertions.assertEquals(actividad, actividadNueva, "Deber ser igual");
     }
 
@@ -42,7 +42,7 @@ class ActividadTest {
     @Order(3)
     @Test
     void actividadEqualsFalseTest() {
-        Actividad actividadNueva = new Actividad(id);
+        Actividad actividadNueva = new Actividad(2L);
         Assertions.assertNotEquals(actividad, actividadNueva, "Deber ser igual");
     }
 

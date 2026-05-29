@@ -110,8 +110,17 @@ public class Actividad {
         return plazasMaximas - plazasOcupadas;
     }
 
-    public void cancelarPlaza(){
-        
+    public void cancelarPlaza() {
+        if (plazasOcupadas > 0) {
+            plazasOcupadas--;
+        }
+
+    }
+
+    public void reservarPlaza() {
+        if (plazasOcupadas < plazasMaximas) {
+            plazasOcupadas++;
+        }
     }
 
     @Override

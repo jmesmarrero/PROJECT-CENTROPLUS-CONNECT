@@ -12,7 +12,7 @@ public class IncidenciaTest {
     String asunto = "asunto";
     String descripcion = "descripcion";
     String fechaStr = "26/05/2026";
-    EstadoIncidencia estado = EstadoIncidencia.valueOf("estado");
+    EstadoIncidencia estado = EstadoIncidencia.valueOf("ABIERTA");
 
     @BeforeEach
     void setup() {
@@ -27,7 +27,7 @@ public class IncidenciaTest {
 
     @Test
     void incidenciaEqualsTrueTest() {
-        Incidencia incidenciaNueva = new Incidencia(id);
+        Incidencia incidenciaNueva = new Incidencia(1L);
         Assertions.assertEquals(incidencia, incidenciaNueva);
 
     }
